@@ -1,6 +1,6 @@
 import 'package:criptografei/components/bottom_bar_component.dart';
 import 'package:criptografei/modules/caesar_cipher_module/ceaser_cipher_screen.dart';
-import 'package:criptografei/modules/only_key_module/only_key_screen.dart';
+import 'package:criptografei/modules/unique_key_module/unnique_key_screen.dart';
 import 'package:criptografei/modules/transposition_module/transposition_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -16,8 +16,22 @@ class _InitialScreenState extends State<InitialScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: 100,
         centerTitle: true,
+        title: Text(
+          'Bem-vindo ao Criptografei!',
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
         backgroundColor: Colors.red,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(10),
+          bottomRight: Radius.circular(10),
+        )),
       ),
       backgroundColor: Colors.white,
       body: Stack(
@@ -40,6 +54,7 @@ class _InitialScreenState extends State<InitialScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
                     Navigator.pushReplacement(
@@ -47,7 +62,7 @@ class _InitialScreenState extends State<InitialScreen> {
                       MaterialPageRoute(
                         builder: (context) => const BottomBarComponent(
                           pages: [
-                            TranspositionCipherScreen(),
+                            TranspositionScreen(),
                             CaeserCipherScreen(),
                             UniqueKeyCipherScreen(),
                           ],
@@ -56,11 +71,13 @@ class _InitialScreenState extends State<InitialScreen> {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(200, 50),
-                  ),
+                      minimumSize: const Size(300, 60),
+                      backgroundColor: Colors.white,
+                      elevation: 10),
                   child: const Text(
                     'Entrar no APP',
-                    style: TextStyle(color: Colors.red),
+                    style: TextStyle(
+                        color: Colors.red, fontWeight: FontWeight.bold),
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -70,28 +87,48 @@ class _InitialScreenState extends State<InitialScreen> {
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title: const Text('Entrar no APP'),
+                          backgroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          title: Text(
+                            'Créditos',
+                            style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.green),
+                          ),
                           actions: [
                             TextButton(
                               onPressed: () {
                                 Navigator.of(context).pop();
                               },
-                              child: const Text('Fechar',
-                                  style: TextStyle(color: Colors.red)),
+                              child: Text(
+                                'Fechar',
+                                style:
+                                    TextStyle(fontSize: 18, color: Colors.red),
+                              ),
                             )
                           ],
-                          content: const Text(
-                              'Trabalho desenvolvido por: Isac Diógenes e João Victor'),
+                          content: Text(
+                            'Trabalho desenvolvido por:\n\nIsac Diógenes\nJoão Victor',
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.black,
+                            ),
+                          ),
                         );
                       },
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(200, 50),
-                  ),
+                      minimumSize: const Size(300, 60),
+                      backgroundColor: Colors.white,
+                      elevation: 10),
                   child: const Text(
                     'Créditos',
-                    style: TextStyle(color: Colors.green),
+                    style: TextStyle(
+                        color: Colors.green, fontWeight: FontWeight.bold),
                   ),
                 ),
               ],

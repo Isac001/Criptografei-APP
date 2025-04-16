@@ -1,4 +1,5 @@
-import 'package:criptografei/modules/only_key_module/only_key_controller.dart';
+import 'package:criptografei/home/initial_screen.dart';
+import 'package:criptografei/modules/unique_key_module/unique_key_controller.dart';
 import 'package:flutter/material.dart';
 
 class UniqueKeyCipherScreen extends StatefulWidget {
@@ -37,10 +38,24 @@ class _UniqueKeyCipherScreenState extends State<UniqueKeyCipherScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-                centerTitle: true,
-
-        title: Text('Criptografia por Chave Única'),
-        backgroundColor: Colors.white,
+        centerTitle: true,
+        title: Text(
+          'Criptografia por Chave Única',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: Colors.red,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const InitialScreen()),
+            );
+          },
+        ),
       ),
       backgroundColor: Colors.white,
       body: Center(
@@ -67,7 +82,9 @@ class _UniqueKeyCipherScreenState extends State<UniqueKeyCipherScreen> {
               SizedBox(height: 16),
               ElevatedButton(
                 onPressed: _criptografar,
-                child: Text('Criptografar com chave'),
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
+                child:
+                    Text('Criptografar', style: TextStyle(color: Colors.red)),
               ),
               SizedBox(height: 16),
               TextField(
@@ -77,8 +94,7 @@ class _UniqueKeyCipherScreenState extends State<UniqueKeyCipherScreen> {
                   labelText: 'Texto criptografado',
                   fillColor: Colors.grey.shade100,
                   border: OutlineInputBorder(),
-                                    filled: true,
-
+                  filled: true,
                 ),
               ),
             ],

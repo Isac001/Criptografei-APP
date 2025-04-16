@@ -29,7 +29,8 @@ class _BottomBarComponentState extends State<BottomBarComponent> {
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         selectedItemColor: Colors.red,
-        unselectedItemColor: Colors.grey,
+        unselectedItemColor: Colors.white,
+        backgroundColor: Colors.green,
         items: [
           BottomNavigationBarItem(
               icon: Icon(Icons.numbers, size: 20), label: 'Transposição'),

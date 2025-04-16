@@ -1,4 +1,4 @@
-class TranspositionCipherController {
+class TranspositionController {
   String criptografar(String texto, String chave) {
     texto = texto.replaceAll(' ', '');
     chave = chave.toUpperCase();
