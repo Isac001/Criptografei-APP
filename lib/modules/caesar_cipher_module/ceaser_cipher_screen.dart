@@ -1,8 +1,10 @@
+// Importações necessárias
 import 'package:criptografei/modules/caesar_cipher_module/ceaser_cipher_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; 
 import 'package:criptografei/home/initial_screen.dart';
 
+// Tela da Cifra de César
 class CaeserCipherScreen extends StatefulWidget {
   const CaeserCipherScreen({super.key});
 
@@ -11,19 +13,21 @@ class CaeserCipherScreen extends StatefulWidget {
 }
 
 class _CaeserCipherScreenState extends State<CaeserCipherScreen> {
-  final TextEditingController _inputController = TextEditingController();
-  final TextEditingController _shiftController = TextEditingController(text: '3');
-  final TextEditingController _outputCipherController = TextEditingController();
-  final TextEditingController _decryptInputController = TextEditingController();
-  final TextEditingController _decryptedTextController = TextEditingController();
+  // Controladores de texto para os campos da interface
+  final TextEditingController _inputController = TextEditingController(); // Texto original
+  final TextEditingController _shiftController = TextEditingController(text: '3'); // Deslocamento padrão
+  final TextEditingController _outputCipherController = TextEditingController(); // Texto criptografado
+  final TextEditingController _decryptInputController = TextEditingController(); // Texto cifrado para descriptografar
+  final TextEditingController _decryptedTextController = TextEditingController(); // Resultado descriptografado
 
+  // Controlador da lógica da Cifra de César
   late CaesarCipherController _controller;
 
   @override
   void initState() {
     super.initState();
-    _controller = CaesarCipherController();
-    _shiftController.addListener(_updateShift);
+    _controller = CaesarCipherController(); // Instancia o controlador
+    _shiftController.addListener(_updateShift); // Atualiza deslocamento sempre que o campo for alterado
   }
 
   @override
@@ -32,11 +36,13 @@ class _CaeserCipherScreenState extends State<CaeserCipherScreen> {
     super.dispose();
   }
 
+  // Atualiza o valor do deslocamento na lógica
   void _updateShift() {
     final shift = int.tryParse(_shiftController.text) ?? 3;
     _controller.deslocamento = shift;
   }
 
+  // Função para criptografar o texto
   void _criptografar() {
     try {
       final resultado = _controller.criptografar(_inputController.text);
@@ -48,6 +54,7 @@ class _CaeserCipherScreenState extends State<CaeserCipherScreen> {
     }
   }
 
+  // Função para descriptografar o texto
   void _descriptografar() {
     try {
       final resultado = _controller.descriptografar(_decryptInputController.text);
@@ -59,6 +66,7 @@ class _CaeserCipherScreenState extends State<CaeserCipherScreen> {
     }
   }
 
+  // Copia texto para a área de transferência e mostra mensagem
   void _copyToClipboard(String text, String message) {
     if (text.isEmpty) {
       _showSnackBar('Nada para copiar!');
@@ -68,6 +76,7 @@ class _CaeserCipherScreenState extends State<CaeserCipherScreen> {
     _showSnackBar(message);
   }
 
+  // Exibe uma snackbar com a mensagem desejada
   void _showSnackBar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -77,9 +86,11 @@ class _CaeserCipherScreenState extends State<CaeserCipherScreen> {
     );
   }
 
+  // Interface da tela
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // AppBar com botão de voltar
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
@@ -99,11 +110,14 @@ class _CaeserCipherScreenState extends State<CaeserCipherScreen> {
         ),
       ),
       backgroundColor: Colors.white,
+
+      // Corpo da tela com rolagem
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            // Configuração do deslocamento
+
+            // Card para configurar o deslocamento
             Card(
               elevation: 4,
               child: Padding(
@@ -170,6 +184,8 @@ class _CaeserCipherScreenState extends State<CaeserCipherScreen> {
                       child: const Text('CRIPTOGRAFAR'),
                     ),
                     const SizedBox(height: 16),
+
+                    // Campo com resultado da criptografia
                     Row(
                       children: [
                         Expanded(
@@ -236,6 +252,8 @@ class _CaeserCipherScreenState extends State<CaeserCipherScreen> {
                       child: const Text('DESCRIPTOGRAFAR'),
                     ),
                     const SizedBox(height: 16),
+
+                    // Campo com texto descriptografado
                     Row(
                       children: [
                         Expanded(

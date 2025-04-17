@@ -45,11 +45,15 @@ class TranspositionController {
     return buffer.toString();
   }
 
+  // Função para descriptografar o texto cifrado
   String descriptografar(String textoCifrado, String chave) {
+
+    // Validações iniciais
     if (textoCifrado.isEmpty) throw ArgumentError("O texto cifrado não pode estar vazio");
     if (chave.isEmpty) throw ArgumentError("A chave não pode estar vazia");
     if (!_isValidKey(chave)) throw ArgumentError("A chave não pode ter letras repetidas");
 
+    // Pré-processamento
     chave = chave.toUpperCase();
     final chaveChars = chave.split('');
     
@@ -97,6 +101,7 @@ class TranspositionController {
     return buffer.toString();
   }
 
+  // Função para validar a chave
   bool _isValidKey(String chave) {
     final chars = chave.toUpperCase().split('');
     return chars.length == chars.toSet().length;

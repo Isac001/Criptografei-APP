@@ -1,8 +1,10 @@
+// Importações necessárias
 import 'package:flutter/material.dart';
 import 'package:criptografei/home/initial_screen.dart';
 import 'package:criptografei/modules/transposition_module/transposition_controller.dart';
 import 'package:flutter/services.dart';
 
+// Tela da Cifra de Transposição
 class TranspositionScreen extends StatefulWidget {
   const TranspositionScreen({super.key});
 
@@ -11,6 +13,7 @@ class TranspositionScreen extends StatefulWidget {
 }
 
 class _TranspositionScreenState extends State<TranspositionScreen> {
+  // Controladores de texto para entrada e saída
   final TextEditingController _inputController = TextEditingController();
   final TextEditingController _outputKeyController = TextEditingController();
   final TextEditingController _outputCipherController = TextEditingController();
@@ -20,20 +23,25 @@ class _TranspositionScreenState extends State<TranspositionScreen> {
   final TextEditingController _decryptedTextController =
       TextEditingController();
 
+  // Instância do controlador da cifra
   final TranspositionController _controller = TranspositionController();
 
+  // Função para criptografar o texto
   void _criptografar() {
     try {
       final texto = _inputController.text;
       final chave = _outputKeyController.text;
 
+      // Verifica se a chave foi preenchida
       if (chave.trim().isEmpty) {
         _showSnackBar('Digite uma chave válida!');
         return;
       }
 
+      // Executa a criptografia
       final resultado = _controller.criptografar(texto, chave);
 
+      // Atualiza o campo com o resultado
       setState(() {
         _outputCipherController.text = resultado;
       });
@@ -43,18 +51,22 @@ class _TranspositionScreenState extends State<TranspositionScreen> {
     }
   }
 
+  // Função para descriptografar o texto
   void _descriptografar() {
     try {
       final textoCifrado = _decryptCipherController.text;
       final chave = _decryptKeyController.text;
 
+      // Verifica se os campos estão preenchidos
       if (chave.trim().isEmpty || textoCifrado.isEmpty) {
         _showSnackBar('Preencha a chave e o texto cifrado!');
         return;
       }
 
+      // Executa a descriptografia
       final resultado = _controller.descriptografar(textoCifrado, chave);
 
+      // Atualiza o campo com o resultado
       setState(() {
         _decryptedTextController.text = resultado;
       });
@@ -64,11 +76,13 @@ class _TranspositionScreenState extends State<TranspositionScreen> {
     }
   }
 
+  // Copia o texto para a área de transferência
   void _copyToClipboard(String text, String message) {
     Clipboard.setData(ClipboardData(text: text));
     _showSnackBar(message);
   }
 
+  // Exibe uma snackbar com a mensagem fornecida
   void _showSnackBar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -81,6 +95,7 @@ class _TranspositionScreenState extends State<TranspositionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // AppBar da tela
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
@@ -123,6 +138,7 @@ class _TranspositionScreenState extends State<TranspositionScreen> {
                       ),
                     ),
                     const SizedBox(height: 16),
+                    // Campo para digitar o texto original
                     TextField(
                       controller: _inputController,
                       decoration: InputDecoration(
@@ -138,6 +154,7 @@ class _TranspositionScreenState extends State<TranspositionScreen> {
                     const SizedBox(height: 12),
                     Row(
                       children: [
+                        // Campo para digitar a chave
                         Expanded(
                           child: TextField(
                             controller: _outputKeyController,
@@ -152,6 +169,7 @@ class _TranspositionScreenState extends State<TranspositionScreen> {
                           ),
                         ),
                         const SizedBox(width: 8),
+                        // Botão para criptografar
                         ElevatedButton(
                           onPressed: _criptografar,
                           style: ElevatedButton.styleFrom(
@@ -169,6 +187,7 @@ class _TranspositionScreenState extends State<TranspositionScreen> {
                     const SizedBox(height: 16),
                     Row(
                       children: [
+                        // Campo com o texto cifrado (após criptografia)
                         Expanded(
                           child: TextField(
                             controller: _outputCipherController,
@@ -184,6 +203,7 @@ class _TranspositionScreenState extends State<TranspositionScreen> {
                             maxLines: 3,
                           ),
                         ),
+                        // Botão para copiar texto cifrado
                         IconButton(
                           icon: const Icon(Icons.copy, color: Colors.red),
                           onPressed: () => _copyToClipboard(
@@ -218,6 +238,7 @@ class _TranspositionScreenState extends State<TranspositionScreen> {
                       ),
                     ),
                     const SizedBox(height: 16),
+                    // Campo para digitar a chave
                     TextField(
                       controller: _decryptKeyController,
                       decoration: InputDecoration(
@@ -232,6 +253,7 @@ class _TranspositionScreenState extends State<TranspositionScreen> {
                     const SizedBox(height: 12),
                     Row(
                       children: [
+                        // Campo para digitar o texto cifrado
                         Expanded(
                           child: TextField(
                             controller: _decryptCipherController,
@@ -247,6 +269,7 @@ class _TranspositionScreenState extends State<TranspositionScreen> {
                           ),
                         ),
                         const SizedBox(width: 8),
+                        // Botão para descriptografar
                         ElevatedButton(
                           onPressed: _descriptografar,
                           style: ElevatedButton.styleFrom(
@@ -264,6 +287,7 @@ class _TranspositionScreenState extends State<TranspositionScreen> {
                     const SizedBox(height: 16),
                     Row(
                       children: [
+                        // Campo com o texto descriptografado
                         Expanded(
                           child: TextField(
                             controller: _decryptedTextController,
@@ -279,6 +303,7 @@ class _TranspositionScreenState extends State<TranspositionScreen> {
                             maxLines: 3,
                           ),
                         ),
+                        // Botão para copiar o texto descriptografado
                         IconButton(
                           icon: const Icon(Icons.copy, color: Colors.red),
                           onPressed: () => _copyToClipboard(
