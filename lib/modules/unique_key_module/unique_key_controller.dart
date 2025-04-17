@@ -1,38 +1,61 @@
-class UniqueKeyCipherController {
-  String gerarAlfabetoComChave(String chave) {
-    chave = chave.toUpperCase().replaceAll(RegExp(r'[^A-Z]'), '');
-    String novoAlfabeto = '';
+import 'dart:convert';
+import 'dart:math';
 
-    for (var letra in chave.split('')) {
-      if (!novoAlfabeto.contains(letra)) {
-        novoAlfabeto += letra;
-      }
+class XorCipherController {
+  static Map<String, dynamic> encrypt(String message) {
+    if (message.isEmpty) {
+      throw ArgumentError("A mensagem não pode estar vazia");
     }
 
-    for (var i = 0; i < 26; i++) {
-      String letra = String.fromCharCode(65 + i);
-      if (!novoAlfabeto.contains(letra)) {
-        novoAlfabeto += letra;
-      }
-    }
+    final key = _generateRandomKey(message.length);
+    final messageBytes = utf8.encode(message);
+    final keyBytes = utf8.encode(key);
 
-    return novoAlfabeto;
+    final encryptedBytes = List<int>.generate(
+      messageBytes.length,
+      (i) => messageBytes[i] ^ keyBytes[i],
+    );
+
+    return {
+      'key': key,
+      'encrypted': encryptedBytes,
+      'binary': _bytesToBinary(encryptedBytes), // Agora retorna binário
+    };
   }
 
-  String criptografar(String texto, String chave) {
-    final alfabetoOriginal = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    final alfabetoChave = gerarAlfabetoComChave(chave);
+  static String decrypt(String binary, String key) {
+    if (binary.isEmpty || key.isEmpty) {
+      throw ArgumentError("Binário e chave não podem estar vazios");
+    }
 
-    return texto.split('').map((char) {
-      bool isUpper = char == char.toUpperCase();
-      String letra = char.toUpperCase();
+    final bytes = _binaryToBytes(binary);
+    final keyBytes = utf8.encode(key);
 
-      if (alfabetoOriginal.contains(letra)) {
-        int index = alfabetoOriginal.indexOf(letra);
-        String substituida = alfabetoChave[index];
-        return isUpper ? substituida : substituida.toLowerCase();
-      }
-      return char;
-    }).join('');
+    if (bytes.length != keyBytes.length) {
+      throw ArgumentError("A chave deve ter o mesmo tamanho da mensagem original");
+    }
+
+    final decryptedBytes = List<int>.generate(
+      bytes.length,
+      (i) => bytes[i] ^ keyBytes[i],
+    );
+
+    return utf8.decode(decryptedBytes);
+  }
+
+  static String _generateRandomKey(int length) {
+    final random = Random.secure();
+    return String.fromCharCodes(
+      List.generate(length, (_) => random.nextInt(26) + 65), // A-Z
+    );
+  }
+
+  static String _bytesToBinary(List<int> bytes) {
+    return bytes.map((b) => b.toRadixString(2).padLeft(8, '0')).join(' ');
+  }
+
+  static List<int> _binaryToBytes(String binary) {
+    final binaryStrings = binary.split(' ');
+    return binaryStrings.map((b) => int.parse(b, radix: 2)).toList();
   }
 }
