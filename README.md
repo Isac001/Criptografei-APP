@@ -1,16 +1,29 @@
-# criptografei
+# Criptografei-APP
 
-A new Flutter project.
+#### Dependency Table
 
-## Getting Started
+| Packages       | Version                             | Installation Link                                                                |
+|---------------|-------------------------------------|----------------------------------------------------------------------------------|
+| Flutter        | [3.22.2]                            | [Flutter Installation](https://flutter.dev)                                      |
+| Dart           | [3.4.3]                            | [Dart Installation](https://dart.dev)                                           |
+| Android Studio | [Android Studio 2024.2.2]           | [Android Studio Installation](https://developer.android.com/studio)             |
 
-This project is a starting point for a Flutter application.
+## Git Clone
+The project requires two additional Git repositories besides this one. First, the current repository will be cloned using `git clone`.
 
-A few resources to get you started if this is your first Flutter project:
+### Steps to Clone the Repository:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- **Step 1:** Open a terminal and run the following command:
+    ```bash
+    git clone https://github.com/Isac001/Desafio-Guia-Motel.git DesafioGuiaMotei
+    ```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- **Step 2:** Open the cloned folder by running:
+    ```bash
+    cd desafio_guia_motel
+    ```
+
+- **Step 3:** Get all dependencies:
+    ```bash
+    flutter pub get
+    ```
