@@ -15,12 +15,12 @@ The project requires two additional Git repositories besides this one. First, th
 
 - **Step 1:** Open a terminal and run the following command:
     ```bash
-    git clone https://github.com/Isac001/Criptografei-APP.git Criptografei_App
+    git clone https://github.com/Isac001/Criptografei_APP.git 
     ```
 
 - **Step 2:** Open the cloned folder by running:
     ```bash
-    cd desafio_guia_motel
+    cd Criptografei_APP
     ```
 
 - **Step 3:** Get all dependencies:
